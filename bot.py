@@ -22,17 +22,17 @@ client = MyClient()
 @client.tree.command(name="try", description="Randomly choose Ano or Ne")
 async def try_command(interaction: discord.Interaction):
     choice = random.choice(["ANO", "NE"])
-    await interaction.response.send_message(choice)
+    await interaction.response.send_message(f"**{choice}**")
 
 @client.tree.command(name="roll", description="Roll a number between 1 and 20")
 async def roll_command(interaction: discord.Interaction):
     number = random.randint(1, 20)
-    await interaction.response.send_message(f"You rolled: {number}")
+    await interaction.response.send_message(f"**{number}**")
 
 @client.tree.command(name="coin", description="Flip a coin")
 async def coin_command(interaction: discord.Interaction):
     flip = random.choice(["Heads", "Tails"])
-    await interaction.response.send_message(f"🪙 {flip}")
+    await interaction.response.send_message(f"🪙 **{flip}**")
 
 # Minimal web server so Render detects open port
 async def handle(request):
