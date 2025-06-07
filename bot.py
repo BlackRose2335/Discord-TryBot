@@ -34,12 +34,22 @@ async def coin_command(interaction: discord.Interaction):
     flip = random.choice(["Heads", "Tails"])
     await interaction.response.send_message(f"🪙 **{flip}**")
 
-# Minimal web server so Render detects open port
-async def handle(request):
+# Serve root route with simple text so Render knows app is alive
+async def handle_root(request):
     return web.Response(text="TryBot is running!")
 
+# Serve privacy.html file
+async def handle_privacy(request):
+    return web.FileResponse('./privacy.html')
+
+# Serve terms.html file
+async def handle_terms(request):
+    return web.FileResponse('./terms.html')
+
 app = web.Application()
-app.router.add_get('/', handle)
+app.router.add_get('/', handle_root)
+app.router.add_get('/privacy.html', handle_privacy)
+app.router.add_get('/terms.html', handle_terms)
 
 async def start_web_server():
     runner = web.AppRunner(app)
