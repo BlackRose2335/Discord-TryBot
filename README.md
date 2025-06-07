@@ -77,6 +77,27 @@ It can take up to **1 hour** for commands to appear in **all servers your bot is
 - ***.gitignore*** — ignores .env and Python cache files
 - ***LICENSE*** — MIT License
 
+---
+
+## 🔐 Security Policy
+
+Please refer to our [Security Policy](./SECURITY.md) for details on how to report vulnerabilities.
+
+We encourage responsible disclosure of security vulnerabilities. If you discover any, please contact us directly via Discord. You can find the full guidelines for reporting in the [Security Policy](./SECURITY.md).
+
+---
+
+## 🐞 Issue Reporting and Feature Requests
+
+We welcome contributions and suggestions! If you encounter a bug or have a feature request, please use the provided templates for submitting your issues:
+
+- [Bug Report](.github/ISSUE_TEMPLATE/bug_report.md)
+- [Feature Request](.github/ISSUE_TEMPLATE/feature_request.md)
+
+To submit a bug report or feature request, visit our [GitHub Issues](https://github.com/your-repo/issues) page and select the appropriate template.
+
+---
+
 ## 📄 License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
