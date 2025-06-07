@@ -21,14 +21,14 @@ async def on_message(message):
         return
 
     if message.content.startswith('/try'):
-        response = random.choice(['Ano', 'Ne'])
+        response = random.choice(['ANO', 'NE'])
         await message.channel.send(response)
     elif message.content.startswith('/roll'):
-        roll = random.randint(1, 100)
+        roll = random.randint(1, 20)
         await message.channel.send(f'🎲 You rolled: {roll}')
     elif message.content.startswith('/coin'):
         coin = random.choice(['Heads', 'Tails'])
-        await message.channel.send(f'🪙 Coin flip result: {coin}')
+        await message.channel.send(f'🪙{coin}')
 
 # Minimal web server so Render sees an open port
 async def handle(request):
