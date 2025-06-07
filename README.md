@@ -76,6 +76,25 @@ It can take up to **1 hour** for commands to appear in **all servers your bot is
 - ***requirements.txt*** — dependencies (discord.py, python-dotenv)
 - ***.gitignore*** — ignores .env and Python cache files
 - ***LICENSE*** — MIT License
+- ***privacy.html*** — Privacy Policy page (needed for Discord app verification)
+- ***terms.html*** — Terms of Service page (needed for Discord app verification)
+
+---
+
+## 🌐 Why the web server in ```bot.py```?
+
+When deploying on free hosting services like Render, your bot needs to keep an open web port to avoid being shut down for inactivity.
+The included minimal web server listens on port 8000, responding with a simple "TryBot is running!" message. 
+
+This satisfies [*Render’s*](https://render.com) requirement and keeps the bot alive **24/7**.
+
+---
+
+## 📑 Discord App Verification
+
+Discord requires public bots to have Privacy Policy and Terms of Service links for verification if they request certain permissions or are in many servers.
+
+This repository includes simple privacy.html and terms.html files you can host on your domain or your Render app’s web server, and provide their URLs in your Discord Developer Portal application settings.
 
 ---
 
