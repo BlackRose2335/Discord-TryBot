@@ -19,6 +19,7 @@ class MyClient(discord.Client):
 
 client = MyClient()
 
+# Slash commands
 @client.tree.command(name="try", description="Randomly choose Ano or Ne")
 async def try_command(interaction: discord.Interaction):
     choice = random.choice(["ANO", "NE"])
@@ -34,22 +35,33 @@ async def coin_command(interaction: discord.Interaction):
     flip = random.choice(["Heads", "Tails"])
     await interaction.response.send_message(f"🪙 **{flip}**")
 
-# Serve root route with simple text so Render knows app is alive
-async def handle_root(request):
+# Prefix commands (work in DMs and servers)
+@client.event
+async def on_message(message):
+    # Ignore messages from the bot itself
+    if message.author == client.user:
+        return
+
+    content = message.content.lower()
+
+    if content.startswith('!try'):
+        choice = random.choice(["ANO", "NE"])
+        await message.channel.send(f"**{choice}**")
+
+    elif content.startswith('!roll'):
+        number = random.randint(1, 20)
+        await message.channel.send(f"**{number}**")
+
+    elif content.startswith('!coin'):
+        flip = random.choice(["Heads", "Tails"])
+        await message.channel.send(f"🪙 **{flip}**")
+
+# Minimal web server so Render detects open port
+async def handle(request):
     return web.Response(text="TryBot is running!")
 
-# Serve privacy.html file
-async def handle_privacy(request):
-    return web.FileResponse('./privacy.html')
-
-# Serve terms.html file
-async def handle_terms(request):
-    return web.FileResponse('./terms.html')
-
 app = web.Application()
-app.router.add_get('/', handle_root)
-app.router.add_get('/privacy.html', handle_privacy)
-app.router.add_get('/terms.html', handle_terms)
+app.router.add_get('/', handle)
 
 async def start_web_server():
     runner = web.AppRunner(app)
