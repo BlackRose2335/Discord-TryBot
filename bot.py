@@ -1,6 +1,7 @@
 import os
 import random
 import discord
+from discord import app_commands
 import asyncio
 from dotenv import load_dotenv
 from aiohttp import web
@@ -8,29 +9,32 @@ from aiohttp import web
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 
-intents = discord.Intents.default()
-client = discord.Client(intents=intents)
+class MyClient(discord.Client):
+    def __init__(self):
+        super().__init__(intents=discord.Intents.default())
+        self.tree = app_commands.CommandTree(self)
 
-@client.event
-async def on_ready():
-    print(f'Logged in as {client.user}!')
+    async def setup_hook(self):
+        await self.tree.sync()
 
-@client.event
-async def on_message(message):
-    if message.author == client.user:
-        return
+client = MyClient()
 
-    if message.content.startswith('/try'):
-        response = random.choice(['ANO', 'NE'])
-        await message.channel.send(response)
-    elif message.content.startswith('/roll'):
-        roll = random.randint(1, 20)
-        await message.channel.send(f'🎲 You rolled: {roll}')
-    elif message.content.startswith('/coin'):
-        coin = random.choice(['Heads', 'Tails'])
-        await message.channel.send(f'🪙{coin}')
+@client.tree.command(name="try", description="Randomly choose Ano or Ne")
+async def try_command(interaction: discord.Interaction):
+    choice = random.choice(["ANO", "NE"])
+    await interaction.response.send_message(choice)
 
-# Minimal web server so Render sees an open port
+@client.tree.command(name="roll", description="Roll a number between 1 and 20")
+async def roll_command(interaction: discord.Interaction):
+    number = random.randint(1, 20)
+    await interaction.response.send_message(f"You rolled: {number}")
+
+@client.tree.command(name="coin", description="Flip a coin")
+async def coin_command(interaction: discord.Interaction):
+    flip = random.choice(["Heads", "Tails"])
+    await interaction.response.send_message(f"🪙 {flip}")
+
+# Minimal web server so Render detects open port
 async def handle(request):
     return web.Response(text="TryBot is running!")
 
